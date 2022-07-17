@@ -1,0 +1,76 @@
+/* Default color scheme: Vodka */
+:root {
+  --primary-color: #b8b8fa;
+  --secondary-color: #d8d8fa;
+  --font-color: #0f0f0f;
+  --background-color: #121212;
+}
+
+[theme = "vodka"] {
+  --primary-color: #b8b8fa;
+  --secondary-color: #d8d8fa;
+}
+
+[theme = "mauve"] {
+  --primary-color: #cdb6fc;
+  --secondary-color: #edd6fc;
+}
+
+[theme = "baby-blue-eyes"] {
+  --primary-color: #a7bffb;
+  --secondary-color: #c7dffb;
+}
+
+[theme = "deep-peach"] {
+  --primary-color: #fac9a8;
+  --secondary-color: #fae9c8;
+}
+
+[theme = "tea-green"] {
+  --primary-color: #d9fab8;
+  --secondary-color: #f9fad8;
+}
+
+[theme = "melon"] {
+  --primary-color: #fab8b8;
+  --secondary-color: #fad8d8;
+}
+
+[theme = "nyanza"] {
+  --primary-color: #d8fad8;
+  --secondary-color: #f8faf8;
+}
+
+[theme = "light-hot-pink"] {
+  --primary-color: #fab8e9;
+  --secondary-color: #fae8f9;
+}
+
+[theme = "topaz"] {
+  --primary-color: #faca88;
+  --secondary-color: #faeac8;
+}
+
+[theme = "pale-green"] {
+  --primary-color: #88faa9;
+  --secondary-color: #d8faf9;
+}
+
+body {
+  font-size: 10px;
+  color: var(--primary-color);
+  background-color: var(--background-color);
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+button {
+  font-size: 1rem;
+  color: var(--font-color);
+  background-color: var(--primary-color);
+  border-radius: 0.5em;
+}

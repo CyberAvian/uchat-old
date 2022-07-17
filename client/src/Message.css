@@ -1,0 +1,70 @@
+/* 
+Order of formatting rules:
+  Positioning
+  Display & Box Model
+  Color
+  Text
+  Other
+*/
+
+.Message {
+  max-width: 50%;
+}
+
+.Message:first-child {
+  margin-top: auto;
+}
+
+.Message:last-child {
+  margin-bottom: 0.5rem;
+}
+
+.Message h4 {
+  margin: 0;
+  font-size: 0.7rem;
+}
+
+.Message p {
+  display: block;
+  min-width: min-content;
+  min-height: min-content;
+  max-height: max-content;
+  margin: 0;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.7rem;
+
+  color: var(--font-color);
+  background-color: var(--primary-color);
+
+  font-family: sans-serif;
+  font-size: 1rem;
+  text-align: left;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow-wrap: break-word;
+}
+
+/* Align message to the right of the chatbox for messages sent by the user */
+.self {
+  margin: 0rem 0.7rem 0.2rem auto;
+}
+
+/* Align message to the left of the chatbox for messages sent by other users */
+.other {
+  margin: 0rem auto 0.2rem 0.7rem;
+}
+
+.other h4 {
+  text-align: left;
+  margin-left: 0.5rem;
+}
+
+/* Show a username banner on appropriate messages */
+.show h4 {
+  color: rgba(01, 01, 01, 50%);
+}
+
+/* Hide the username banner based on criteria defined during element creation */
+.hide h4 {
+  display: none;
+}
