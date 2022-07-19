@@ -6,7 +6,7 @@ import UserInput from './UserInput';
 import Message from './Message';
 import './Chat.css';
 
-const Chat = ({ username, exitHandler }) => {
+const Chat = ({ username, clickHandler }) => {
   const socket = useContext(SocketContext);
 
   const [users, setUsers] = useState([]);
@@ -28,7 +28,6 @@ const Chat = ({ username, exitHandler }) => {
       setUsers(existingUsers => {
         var userElements = [];
         args.forEach((user) => {
-          console.log(user);
           var userElement = <p key={user.socketid}>{user.username}</p>;
           userElements.push(userElement);
         });
@@ -103,8 +102,6 @@ const Chat = ({ username, exitHandler }) => {
       alert(error);
     });
 
-    console.log(error);
-
     // Cleanup
     return () => {
       socket.off('get users');
@@ -132,7 +129,7 @@ const Chat = ({ username, exitHandler }) => {
         <Navigate to="/" replace={true} />
       )}
       <h1>Chat App</h1>
-      <Menu username={username} exitHandler={exitHandler}/>
+      <Menu username={username} clickHandler={clickHandler}/>
       <div className='chatwindow'>
         <div className='chatbox' id="chatbox">
           {messageElements}

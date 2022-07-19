@@ -12,6 +12,13 @@ const App = () => {
   const [socketid, setSocketid] = useState(null);
   const [error, setError] = useState(null);
 
+  const handleClick = (event) => {
+    socket.connect();
+    setUsername(null);
+    setSocketid(null);
+    setError(null);
+  }
+
   useEffect(() => {
     document.documentElement.setAttribute('theme', 'vodka');
     // document.documentElement.setAttribute('theme', 'mauve');
@@ -44,16 +51,11 @@ const App = () => {
     }
   }, []);
 
-  const handleExit = (event) => {
-    if (window.confirm('Are you sure you want to exit?')) {
-      window.close();
-    }
-  }
-
   const handleSubmit = (event) => {
     event.preventDefault();
     let username = event.target.username.value;
     if (username) {
+      console.log(username);
       socket.emit('set data', 'username', username);
     }
   }
@@ -61,7 +63,7 @@ const App = () => {
   return (
     <Routes>
       <Route index path="/" element={<Login username={username} error={error} submitHandler={handleSubmit} />} />
-      <Route path="/chat" element={<Chat  username={username} exitHandler={handleExit} />} />
+      <Route path="/chat" element={<Chat  username={username} clickHandler={handleClick} />} />
     </Routes>
   );
 }

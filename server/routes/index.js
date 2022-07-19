@@ -37,6 +37,7 @@ module.exports = (io) => {
 
     // Update username or messages depending on the data sent from the client
     socket.on('set data', (type, content) => {
+      console.log(`Type: ${type} Content: ${content}`);
       if (content) {
         switch (type) {
           case 'username':
