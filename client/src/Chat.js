@@ -125,9 +125,10 @@ const Chat = ({ username, clickHandler }) => {
 
   return (
     <div className='chat' id='chat'>
-      {!username && (
+      {console.log('chat loaded')}
+      {/* {!username && (
         <Navigate to="/" replace={true} />
-      )}
+      )} */}
       <h1>Chat App</h1>
       <Menu username={username} clickHandler={clickHandler}/>
       <div className='chatwindow'>
