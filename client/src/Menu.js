@@ -1,13 +1,13 @@
 import "./Menu.css";
 
-function Menu({ username, exitHandler }) {
+function Menu({ username, clickHandler }) {
   return (
     <div className="Menu">
       <p>Welcome, {username}</p>
       <button type="button" 
               id="exit" 
               aria-label="exit"
-              onClick={exitHandler}>Exit Chat</button>
+              onClick={clickHandler}>Exit Chat</button>
     </div>
   );
 }

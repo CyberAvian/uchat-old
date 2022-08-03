@@ -37,6 +37,7 @@ module.exports = (io) => {
 
     // Update username or messages depending on the data sent from the client
     socket.on('set data', (type, content) => {
+      console.log(`Type: ${type} Content: ${content}`);
       if (content) {
         switch (type) {
           case 'username':
@@ -67,6 +68,7 @@ module.exports = (io) => {
 
     // Fetch all stored data (mostly used for new connections setting initial data)
     socket.on('get data', (type) => {
+      console.log(`Get ${type}`);
       switch (type) {
         case 'users':
           console.log(`Sent current user list to ${user} on socket ${socketid}`);
@@ -87,6 +89,8 @@ module.exports = (io) => {
     socket.on('disconnect', () => {
       users.pop({username: user, socketid: socketid});
       console.log(`Disconnected User: ${user}`);
+      user = null;
+      theme = null;
       socket.emit('update users', users);
     });
   });
