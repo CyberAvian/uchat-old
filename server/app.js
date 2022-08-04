@@ -9,12 +9,12 @@ const { rmSync } = require('fs');
 var app = express();
 app.io = require('socket.io')();
 
-var indexRouter = require('./routes/index')(app.io);
-var publicPath = path.join(__dirname, '../client/build')
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+var indexRouter = require('./routes/index')(app.io);
+var publicPath = path.join(__dirname, '../client/build');
 
 app.use(cors());
 app.use(logger('dev'));
