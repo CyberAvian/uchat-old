@@ -1,12 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
-import { SocketContext } from './socket';
-import Menu from './Menu';
+import { SocketContext } from '../socket';
 import UserInput from './UserInput';
 import Message from './Message';
-import './Chat.css';
+import './chat.css';
 
-const Chat = ({ username, clickHandler }) => {
+const Chat = ({ username }) => {
   const socket = useContext(SocketContext);
 
   const [users, setUsers] = useState([]);
@@ -84,18 +82,14 @@ const Chat = ({ username, clickHandler }) => {
 
     // Handle Users
     socket.emit('get data', 'users');
-
     socket.on('get users', (users) => {updateUsers(...users)});
-
     socket.on('update users', updateUsers);
 
     // Handle messages
     socket.emit('get data', 'messages');
-
     socket.on('get messages', (messages) => {updateMessages(...messages)});
- 
     socket.on('update messages', updateMessages);
-    
+
     // Handle Errors
     socket.on('set error', (error) => {
       setError(error);
@@ -114,33 +108,28 @@ const Chat = ({ username, clickHandler }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const scrollChatBox = () => {
-      var chatbox = document.getElementById("chatbox");
-      chatbox.scrollTop = chatbox.scrollHeight;
-    }
+  // useEffect(() => {
+  //   const scrollChatBox = () => {
+  //     var chatbox = document.getElementById("messages");
+  //     chatbox.scrollTop = chatbox.scrollHeight;
+  //   }
 
-    scrollChatBox();
-  });
+  //   scrollChatBox();
+  // });
 
   return (
     <div className='chat' id='chat'>
-      {console.log('chat loaded')}
-      {/* {!username && (
-        <Navigate to="/" replace={true} />
-      )} */}
-      <h1>Chat App</h1>
-      <Menu username={username} clickHandler={clickHandler}/>
+      {/* Rooms */}
+      {/* Chat */}
       <div className='chatwindow'>
-        <div className='chatbox' id="chatbox">
-          {messageElements}
-        </div>
-        <div className='userlist' id='userlist'>
+        <div className='messages'>{messageElements}</div>
+        <UserInput username={username} />
+      </div>
+      {/* Users */}
+      <div className='userlist' id='userlist'>
           <h2>Users Online</h2>
           {users}
-        </div>
       </div>
-      <UserInput username={username} />
     </div>
   );
 }
