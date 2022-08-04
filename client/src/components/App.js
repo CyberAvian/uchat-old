@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { SocketContext } from './socket';
+import { SocketContext } from '../socket';
 import Login from './Login';
-import Chat from './Chat';
+import Chat from './chat';
 import './App.css';
 
 const App = () => {
   const socket = useContext(SocketContext);
+  console.log(socket);
 
   const [username, setUsername] = useState(null);
   const [socketid, setSocketid] = useState(null);
@@ -51,7 +52,6 @@ const App = () => {
 
   return (
     <div>
-    {console.log('app loaded')}
     <Routes>
       <Route index path="/" element={<Login username={username} error={error} submitHandler={handleSubmit} />} />
       <Route path="/chat" element={<Chat  username={username} clickHandler={handleClick} />} />

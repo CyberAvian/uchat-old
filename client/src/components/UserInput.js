@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SocketContext } from './socket';
+import { SocketContext } from '../socket';
 import './UserInput.css';
 
 const UserInput = ({ username }) => {
