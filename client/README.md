@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# UChat Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend client for the UChat app. 
 
-## Available Scripts
+## Version History
 
-In the project directory, you can run:
+### v2.0.0
 
-### `npm start`
+Converted the entire app to a single-page app. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Menu removed
+- User Input shifted from separate element to child of Chat Window
+- Removed rounded edges from Chat Window and Users List
+- Expanded Chat Window and Users List to fill screen
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### v1.0.0
 
-### `npm test`
+First official build of the cyberavian-chat-app.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Pages:
+- Login
+  - First screen loaded
+  - Only requests a username
+    - Usernames do not have to be unique
+    - Usernames are not verified
+    - Username is required to continue
+- Chat
+  - One room that all active users join
+  - ~~Menu~~ [removed in v2.0.0]
+    - ~~Exit Button to exit chat~~ [removed in v2.0.0]
+    - ~~Greeting~~ [removed in v2.0.0]
+  - User list
+    - Displays active Usernames in chat
+  - Chat Window
+    - Displays chat messages
+    - Messages sent by user on the right, messages sent by others on the left
+    - Messages are matched to username, which can lead to confusion if other people use the same username
+    - Chat message colors randomly determined upon connecting
+      - If a user disconnects and reconnects with the same username, a new color gets generated anyway
+  - User Input
+    - Consists of an ~~separated~~ editable div for text entry and submit button to send messages. 
 
-### `npm run build`
+## Issues:
+1. ~~Chat Bubble Text-Wrap~~ [Fixed]
+  - https://github.com/CyberAvian/uchat/issues/1
+  - Text doesn't wrap correctly within text bubbles
+  - Addressed in a bug fix
+2. ~~Exit Chat button doesn't always work~~ [Fixed]
+  - https://github.com/CyberAvian/uchat/issues/2
+  - Exit Chat button disconnects user without redirecting to the sign in page
+  - Addressed in a bug fix
+3. Reconnect Issues
+  - https://github.com/CyberAvian/uchat/issues/3
+  - Must refresh page on sign in screen after disconnecting to reconnect
+4. User List has spacing issues on mobile
+  - https://github.com/CyberAvian/uchat/issues/4
+  - Usernames overflow the user list on mobile/small screens
+5. Getting Disconnected and Reconnected with new colors
+ - https://github.com/CyberAvian/uchat/issues/5
+ - While chatting, the socket will sometimes disconnect and reconnect giving the user a new color and erasing the username from the user list
+6. Refreshing chat breaks connection
+  - https://github.com/CyberAvian/uchat/issues/6
+  - Refreshing the chat should result in the user returning to the login screen (until authentication is implemented)
+  - Currently, either a 404 error is thrown or the user just can no longer chat
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Planned Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. 
