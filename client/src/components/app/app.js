@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
-import { SocketContext } from '../socket';
-import Login from './Login';
-import Chat from './chat';
-import './App.css';
+import { SocketContext } from '../../socket';
+import Login from '../login/login';
+import Chat from '../chat/chat';
+import './app.css';
 
 const App = () => {
   const socket = useContext(SocketContext);

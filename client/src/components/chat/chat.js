@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { SocketContext } from '../socket';
-import UserInput from './UserInput';
-import Message from './Message';
+import { SocketContext } from '../../socket';
+import UserInput from '../userinput/userinput';
+import Message from '../message/message';
 import './chat.css';
 
 const Chat = ({ username }) => {
   const socket = useContext(SocketContext);
 
+  const [rooms, setRooms] = useState([]);
   const [users, setUsers] = useState([]);
   const [messageList, setMessageList] = useState([]);
   const [messageElements, setMessageElements] = useState([]);
@@ -105,28 +106,31 @@ const Chat = ({ username }) => {
       socket.off('set error');
       socket.disconnect();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   const scrollChatBox = () => {
-  //     var chatbox = document.getElementById("messages");
-  //     chatbox.scrollTop = chatbox.scrollHeight;
-  //   }
+  useEffect(() => {
+    const scrollChatBox = () => {
+      var chatbox = document.querySelector(".messages");
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
 
-  //   scrollChatBox();
-  // });
+    scrollChatBox();
+  });
 
   return (
     <div className='chat' id='chat'>
       {/* Rooms */}
+      <div className='panel' id='rooms'>
+        <h2>Rooms</h2>
+        {rooms}
+      </div>
       {/* Chat */}
       <div className='chatwindow'>
         <div className='messages'>{messageElements}</div>
         <UserInput username={username} />
       </div>
       {/* Users */}
-      <div className='userlist' id='userlist'>
+      <div className='panel' id='users'>
           <h2>Users Online</h2>
           {users}
       </div>

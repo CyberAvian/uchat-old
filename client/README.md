@@ -4,6 +4,11 @@ This is the frontend client for the UChat app.
 
 ## Version History
 
+### v2.1.0
+
+- Moved component files into their own folders
+- Created a rooms panel to display all available rooms
+
 ### v2.0.0
 
 Converted the entire app to a single-page app. 
@@ -29,8 +34,10 @@ First official build of the cyberavian-chat-app.
   - ~~Menu~~ [removed in v2.0.0]
     - ~~Exit Button to exit chat~~ [removed in v2.0.0]
     - ~~Greeting~~ [removed in v2.0.0]
-  - User list
-    - Displays active Usernames in chat
+  - Rooms [added in v2.1.0]
+    - Displays active rooms
+  - Users
+    - Displays active users in chat
   - Chat Window
     - Displays chat messages
     - Messages sent by user on the right, messages sent by others on the left
@@ -62,7 +69,3 @@ First official build of the cyberavian-chat-app.
   - https://github.com/CyberAvian/uchat/issues/6
   - Refreshing the chat should result in the user returning to the login screen (until authentication is implemented)
   - Currently, either a 404 error is thrown or the user just can no longer chat
-
-## Planned Features
-
-1. 

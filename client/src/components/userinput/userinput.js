@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { SocketContext } from '../socket';
-import './UserInput.css';
+import { SocketContext } from '../../socket';
+import './userinput.css';
 
 const UserInput = ({ username }) => {
   const socket = useContext(SocketContext);

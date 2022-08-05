@@ -45,6 +45,11 @@ UChat began as a project to learn React and Express, but has now been shifted to
 
 ## Version History
 
+### v2.0.3
+
+- Client updated to v2.1.0
+  - Added rooms panel
+
 ### v2.0.2
 
 - Redesigned README for client
@@ -57,7 +62,7 @@ UChat began as a project to learn React and Express, but has now been shifted to
 ### v2.0.0
 
 - Client updated to v2.0.0
-  - See client README for details
+  - Turned frontend into single page app
 
 ### v1.0.0
 

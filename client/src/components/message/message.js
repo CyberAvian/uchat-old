@@ -1,4 +1,4 @@
-import './Message.css';
+import './message.css';
 
 const Message = ({ username, text, sender, showUsername, style }) => {
   return (

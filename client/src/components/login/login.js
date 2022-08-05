@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import "./Login.css";
+import "./login.css";
 
 const Login = ({ username, error, submitHandler }) => {
 
