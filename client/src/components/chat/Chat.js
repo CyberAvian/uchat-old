@@ -13,8 +13,6 @@ const Chat = ({ username }) => {
   const [messageElements, setMessageElements] = useState([]);
   const [error, setError] = useState(null);
 
-  console.log('chat');
-
   // Runs once on mount
   useEffect(() => {
     const resetMessageBox = () => {
@@ -25,11 +23,20 @@ const Chat = ({ username }) => {
 
     resetMessageBox();
     // Update Functions
-    function updateUsers(...args) {
+    function updateUsers(users) {
+      // Sort so that current user is first and then rest of users are sorted in descending order
+      users.sort((a, b) => {
+        if (a.userID === socket.id) {return -1};
+        if (b.userID === socket.id) {return 1};
+        if (a.username < b.username) {return -1};
+        return a.username > b.username ? 1 : 0;
+      });
+
+      // Create user elements to put in the user list
       setUsers(existingUsers => {
         var userElements = [];
-        args.forEach((user) => {
-          var userElement = <p key={user.socketid}>{user.username}</p>;
+        users.forEach((user) => {
+          var userElement = <p key={user.userID}>{user.username}</p>;
           userElements.push(userElement);
         });
         return [...existingUsers, userElements];
@@ -84,9 +91,7 @@ const Chat = ({ username }) => {
     }
 
     // Handle Users
-    socket.emit('get data', 'users');
-    socket.on('get users', (users) => {updateUsers(...users)});
-    socket.on('update users', updateUsers);
+    socket.on('users', (users) => {updateUsers(users)});
 
     // Handle messages
     socket.emit('get data', 'messages');
@@ -106,7 +111,6 @@ const Chat = ({ username }) => {
       socket.off('update users');
       socket.off('update messages');
       socket.off('set error');
-      socket.disconnect();
     }
   }, []);
 

@@ -11,11 +11,11 @@ const App = () => {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [error, setError] = useState('');
 
-  console.log(socket);
-
   const handleSubmit = (event) => {
     event.preventDefault();
     var username = event.target.username.value;
+    userHasAuthenticated(true);
+
     socket.auth = { username };
     socket.connect();
 

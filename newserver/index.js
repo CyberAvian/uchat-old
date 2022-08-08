@@ -16,7 +16,14 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
-  console.log('connected');
+  const users = [];
+  for (let [id, socket] of io.of('/').sockets) {
+    users.push({
+      userID: id,
+      username: socket.username,
+    });
+  }
+  socket.emit("users", users);
 });
 
 const PORT = process.env.PORT || '9000';
