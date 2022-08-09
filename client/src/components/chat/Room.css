@@ -1,0 +1,20 @@
+.room {
+  list-style: none;
+  border-top: 1px solid var(--primary-color);
+  border-bottom: 1px solid var(--primary-color);
+  text-align: left;
+}
+
+.room:hover {
+  cursor: pointer;
+  background-color: var(--primary-color);
+}
+
+.room-name {
+  font-weight: bold;
+  color: rgba(100, 100, 100, 80%)
+}
+
+.room-preview {
+  font-size: 1.2rem;
+}

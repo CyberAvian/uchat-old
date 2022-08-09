@@ -19,6 +19,7 @@ io.use((socket, next) => {
 });
 
 io.on('connection', (socket) => {
+  console.log(`${socket.username} has connected using socket ${socket.id}`);
   const users = [];
   // Gather all users connected to the current socket server
   for (let [id, socket] of io.of('/').sockets) {
@@ -27,6 +28,7 @@ io.on('connection', (socket) => {
       username: socket.username,
     });
   }
+  console.log(`Sent connected users to ${socket.username}`);
   socket.emit("users", users);
 
   // Broadcast to everyone but the current user

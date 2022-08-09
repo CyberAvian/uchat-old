@@ -23,8 +23,8 @@
   width: 100%;
   min-height: min-content;
   max-height: 80%;
-  font-size: 1.1rem;
-  padding: 0.3em 0.3em 0.3em 0.5em;
+  font-size: 1.6rem;
+  padding: 3px 3px 3px 5px;
   margin: 0;
   overflow: auto;
   color: var(--font-color);
@@ -39,9 +39,9 @@
 }
 
 #messageSend {
-  height: 2.3rem;
-  width: 4rem;
-  font-size: 1.1rem;
-  padding: 0.3em 0.3em 0.3em 0.5em;
+  height: 30px;
+  width: 50px;
+  font-size: 1.6rem;
+  padding: 3px 3px 3px 5px;
   margin: 0;
 }

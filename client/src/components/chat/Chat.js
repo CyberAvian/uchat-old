@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { SocketContext } from '../../socket';
+import Room from './Room';
 import UserInput from './UserInput';
 import Message from './Message';
 import './Chat.css';
@@ -15,23 +16,32 @@ const Chat = ({ username }) => {
 
   // Runs once on mount
   useEffect(() => {
-    const resetMessageBox = () => {
-      var messageBox = document.getElementById('messageBox');
-      messageBox.innerText = '';
-      messageBox.focus();
+    const handleUsers = (userList) => {
+      console.log('Received users from server');
+      saveUsers(userList);
+      // createRooms();
     }
 
-    resetMessageBox();
-    // Update Functions
-    function updateUsers(users) {
-      // Sort so that current user is first and then rest of users are sorted in descending order
-      users.sort((a, b) => {
+    const saveUsers = (userList) => {
+      setUsers(existingUsers => {
+        var newUsers = [...existingUsers, ...userList];
+        sortUsers(newUsers);
+        return newUsers;
+      });
+    }
+
+    const sortUsers = (userList) => {
+      userList.sort((a, b) => {
         if (a.userID === socket.id) {return -1};
         if (b.userID === socket.id) {return 1};
         if (a.username < b.username) {return -1};
         return a.username > b.username ? 1 : 0;
       });
+      return userList;
+    }
 
+    // Update Functions
+    function updateUsers(users) {
       // Create user elements to put in the user list
       setUsers(existingUsers => {
         var userElements = [];
@@ -91,7 +101,7 @@ const Chat = ({ username }) => {
     }
 
     // Handle Users
-    socket.on('users', (users) => {updateUsers(users)});
+    socket.on('users', (users) => {handleUsers(users)});
 
     // Handle messages
     socket.emit('get data', 'messages');
@@ -125,10 +135,15 @@ const Chat = ({ username }) => {
 
   return (
     <div className='chat' id='chat'>
+      {console.log(users)}
       {/* Rooms */}
       <div className='panel' id='rooms'>
         <h2>Rooms</h2>
-        {rooms}
+        <ul className='room-list'>
+          {users.map((user) => {
+            return <Room key={user.userID} name={user.username} />
+          })}
+        </ul>
       </div>
       {/* Chat */}
       <div className='chatwindow'>
@@ -137,8 +152,7 @@ const Chat = ({ username }) => {
       </div>
       {/* Users */}
       <div className='panel' id='users'>
-          <h2>Users Online</h2>
-          {users}
+          <h2>Users</h2>
       </div>
     </div>
   );
