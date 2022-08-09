@@ -28,6 +28,7 @@ io.on('connection', (socket) => {
       username: socket.username,
     });
   }
+  console.log(users);
   console.log(`Sent connected users to ${socket.username}`);
   socket.emit("users", users);
 
@@ -47,6 +48,7 @@ io.on('connection', (socket) => {
 
   // For now, disconnected users are removed from the users list
   socket.on("disconnect", () => {
+    console.log(`User ${socket.username} disconnected on socket ${socket.id}`);
     socket.broadcast.emit("user disconnected", socket.id);
     users.pop({
       userID: socket.id,

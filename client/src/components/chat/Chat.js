@@ -1,9 +1,9 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { SocketContext } from '../../socket';
-import Room from './Room';
-import UserInput from './UserInput';
-import Message from './Message';
-import './Chat.css';
+import React, { useState, useContext, useEffect } from "react";
+import { SocketContext } from "../../socket";
+import Room from "./Room";
+import UserInput from "./UserInput";
+import Message from "./Message";
+import "./Chat.css";
 
 const Chat = ({ username }) => {
   const socket = useContext(SocketContext);
@@ -16,8 +16,8 @@ const Chat = ({ username }) => {
 
   // Runs once on mount
   useEffect(() => {
-    const handleUsers = (userList) => {
-      console.log('Received users from server');
+    const handleUsers = (...userList) => {
+      console.log("Received users from server");
       saveUsers(userList);
       // createRooms();
     }
@@ -40,19 +40,6 @@ const Chat = ({ username }) => {
       return userList;
     }
 
-    // Update Functions
-    function updateUsers(users) {
-      // Create user elements to put in the user list
-      setUsers(existingUsers => {
-        var userElements = [];
-        users.forEach((user) => {
-          var userElement = <p key={user.userID}>{user.username}</p>;
-          userElements.push(userElement);
-        });
-        return [...existingUsers, userElements];
-      });
-    }
-
     function updateMessages(...args) {
       setMessageList(existingMessages => {
         var messages = [];
@@ -65,9 +52,9 @@ const Chat = ({ username }) => {
             var isSenderUser = message.username === username;
 
             // Used to position message within the chatbox
-            var sender = isSenderUser ? 'self' : 'other';
+            var sender = isSenderUser ? "self" : "other";
             
-            // Should show username only if the message wasn't sent by the user and wasn't sent by the same user who sent the previous message in the list
+            // Should show username only if the message wasn"t sent by the user and wasn"t sent by the same user who sent the previous message in the list
             var isPrevUserSame = null;
             if (index === 0) {
               var lastElement = existingElements.length > 0 ? existingElements.length - 1 : null;
@@ -77,9 +64,9 @@ const Chat = ({ username }) => {
             }
 
             // Determine if the sender of the message needs displayed in chatbox
-            var showUsername = 'show';
+            var showUsername = "show";
             if (isSenderUser || isPrevUserSame) {
-              showUsername = 'hide';
+              showUsername = "hide";
             }
 
             var messageElement = <Message key={`${message.username}-${elementCount + messageElements.length}`} 
@@ -88,7 +75,7 @@ const Chat = ({ username }) => {
                                           sender={sender}
                                           showUsername={showUsername}
                                           style={message.theme} />
-            // messageElement.setAttribute('theme', 'baby-blue-eyes');
+            // messageElement.setAttribute("theme", "baby-blue-eyes");
             messageElements.push(messageElement);
             messages.push(message);
           });
@@ -101,26 +88,27 @@ const Chat = ({ username }) => {
     }
 
     // Handle Users
-    socket.on('users', (users) => {handleUsers(users)});
+    socket.on("users", (users) => {handleUsers(...users)});
+    socket.on("user connected", (user) => {handleUsers(user)});
 
     // Handle messages
-    socket.emit('get data', 'messages');
-    socket.on('get messages', (messages) => {updateMessages(...messages)});
-    socket.on('update messages', updateMessages);
+    socket.emit("get data", "messages");
+    socket.on("get messages", (messages) => {updateMessages(...messages)});
+    socket.on("update messages", updateMessages);
 
     // Handle Errors
-    socket.on('set error', (error) => {
+    socket.on("set error", (error) => {
       setError(error);
       alert(error);
     });
 
     // Cleanup
     return () => {
-      socket.off('get users');
-      socket.off('get messages');
-      socket.off('update users');
-      socket.off('update messages');
-      socket.off('set error');
+      socket.off("get users");
+      socket.off("get messages");
+      socket.off("update users");
+      socket.off("update messages");
+      socket.off("set error");
     }
   }, []);
 
@@ -134,25 +122,24 @@ const Chat = ({ username }) => {
   });
 
   return (
-    <div className='chat' id='chat'>
-      {console.log(users)}
+    <div className="chat" id="chat">
       {/* Rooms */}
-      <div className='panel' id='rooms'>
+      <div className="panel" id="rooms">
         <h2>Rooms</h2>
-        <ul className='room-list'>
+        <ul className="room-list">
           {users.map((user) => {
             return <Room key={user.userID} name={user.username} />
           })}
         </ul>
       </div>
       {/* Chat */}
-      <div className='chatwindow'>
-        <div className='messages'>{messageElements}</div>
+      <div className="chatwindow">
+        <div className="messages">{messageElements}</div>
         <UserInput username={username} />
       </div>
       {/* Users */}
-      <div className='panel' id='users'>
-          <h2>Users</h2>
+      <div className="panel" id="users">
+        <h2>Users</h2>
       </div>
     </div>
   );

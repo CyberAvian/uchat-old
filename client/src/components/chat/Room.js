@@ -1,10 +1,10 @@
 import './Room.css';
 
-const Room = ({ name, messages }) => {
+const Room = ({ name }) => {
   return (
-    <li class='room'>
-      <p class='room-name'>{name}</p>
-      <p class='room-preview'>'Message Preview'</p>
+    <li className='room'>
+      <p className='room-name'>{name}</p>
+      <p className='room-preview'>'Message Preview'</p>
     </li>
   );
 }
