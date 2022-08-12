@@ -28,15 +28,31 @@ io.on('connection', (socket) => {
       username: socket.username,
     });
   }
-  console.log(users);
+
   console.log(`Sent connected users to ${socket.username}`);
   socket.emit("users", users);
 
-  // Broadcast to everyone but the current user
-  socket.broadcast.emit("user connected", {
+  // Gather all available rooms
+  const rooms = [];
+  const unfilteredRooms = Array.from(io.sockets.adapter.rooms);
+  // Filter out rooms that match their own socket id (these are private user rooms that we handle from the users list)
+  const filteredRooms = unfilteredRooms.filter(room => !room[1].has(room[0]));
+  for (let [room, id] of filteredRooms) {
+    rooms.push({
+      roomID: id.values().next().value,
+      roomName: room,
+    });
+  }
+
+  console.log(`Sent available rooms to ${socket.username}`);
+  console.log(rooms);
+  socket.emit("rooms", rooms);
+
+  // Broadcast new user information to everyone but the current user
+  socket.broadcast.emit("user connected", [{
     userID: socket.id,
     username: socket.username,
-  });
+  }]);
 
   // Handle private messages between two users
   socket.on("private message", ({ message, recepient }) => {

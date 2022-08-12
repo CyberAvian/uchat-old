@@ -16,28 +16,70 @@ const Chat = ({ username }) => {
 
   // Runs once on mount
   useEffect(() => {
-    const handleUsers = (...userList) => {
+    const handleUsers = (userList) => {
       console.log("Received users from server");
-      saveUsers(userList);
-      // createRooms();
+      saveList(userList, 'user');
     }
 
-    const saveUsers = (userList) => {
-      setUsers(existingUsers => {
-        var newUsers = [...existingUsers, ...userList];
-        sortUsers(newUsers);
-        return newUsers;
-      });
+    const handleRooms = (roomList) => {
+      console.log("Received rooms from server");
+      saveList(roomList, 'room');
     }
 
-    const sortUsers = (userList) => {
-      userList.sort((a, b) => {
-        if (a.userID === socket.id) {return -1};
-        if (b.userID === socket.id) {return 1};
-        if (a.username < b.username) {return -1};
-        return a.username > b.username ? 1 : 0;
-      });
-      return userList;
+    const saveList = (list, type) => {
+      switch (type) {
+        case "user":
+          setUsers(existingUsers => {
+            var newUsers = [...existingUsers, ...list];
+            sortList(newUsers, type);
+            return newUsers;
+          });
+          // When user information is received, private rooms are created using the username and socketID
+          setRooms(existingRooms => {
+            var privateRooms = []
+            list.forEach((user) => {
+              privateRooms.push({
+                roomID: user.userID,
+                roomName: user.username,
+              });
+            });
+            var newRooms = [...existingRooms, ...privateRooms];
+            sortList(newRooms, type);
+            return newRooms;
+          });
+          break;
+        case "room":
+          setRooms(existingRooms => {
+            var newRooms = [...existingRooms, ...list];
+            sortList(newRooms, type);
+            return newRooms;
+          });
+          break;
+        default:
+          console.log("Invalid list type");
+          break;
+      }
+    }
+
+    const sortList = (list, type) => {
+      switch (type) {
+        case "user":
+          list.sort((a, b) => {
+            if (a.userID === socket.id) {return -1};
+            if (b.userID === socket.id) {return 1};
+            if (a.username < b.username) {return -1};
+            return a.username > b.username ? 1 : 0;
+          });
+          break;
+        case "room":
+          list.sort((a, b) => {
+            return a.roomName > b.roomName ? 1 : -1;
+          });
+          break;
+        default:
+          console.log("invalid list type");
+          break;
+      }
     }
 
     function updateMessages(...args) {
@@ -88,8 +130,11 @@ const Chat = ({ username }) => {
     }
 
     // Handle Users
-    socket.on("users", (users) => {handleUsers(...users)});
+    socket.on("users", (users) => {handleUsers(users)});
     socket.on("user connected", (user) => {handleUsers(user)});
+
+    // Handle Rooms
+    socket.on("rooms", (rooms) => {handleRooms(rooms)});
 
     // Handle messages
     socket.emit("get data", "messages");
@@ -127,8 +172,8 @@ const Chat = ({ username }) => {
       <div className="panel" id="rooms">
         <h2>Rooms</h2>
         <ul className="room-list">
-          {users.map((user) => {
-            return <Room key={user.userID} name={user.username} />
+          {rooms.map((room) => {
+            return <Room key={room.roomID} name={room.roomName} />
           })}
         </ul>
       </div>
@@ -140,6 +185,11 @@ const Chat = ({ username }) => {
       {/* Users */}
       <div className="panel" id="users">
         <h2>Users</h2>
+        <ul className="user-list">
+          {users.map((user) => {
+            return <li key={user.userID}>{user.username}</li>
+          })}
+        </ul>
       </div>
     </div>
   );
